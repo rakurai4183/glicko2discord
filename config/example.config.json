@@ -1,0 +1,19 @@
+{
+  "bot": {
+    "apiToken": "abcdefghijklmnopqrstuvwxyz_0123456789",
+    "allowedChannels": [
+      "bot-commands"
+    ],
+    "disabledCommands": [
+      
+    ],
+    "prefix": "!"
+  },
+  "mysql": {
+    "host": "localhost",
+    "port": 3306,
+    "username": "mysqluser",
+    "password": "mysqlpassword",
+    "database": "cordelia"
+  }
+}

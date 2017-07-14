@@ -1,0 +1,27 @@
+{
+  "name": "cordelia-bot",
+  "version": "0.0.1",
+  "description": "Match tracking bot for TetrisAttackOnline Discord.",
+  "scripts": {
+    "dev": "cross-env NODE_ENV=development npm run start:run",
+    "start": "cross-env NODE_ENV=production npm run start:run",
+    "start:run": "babel-node ./src/bot/index.js"
+  },
+  "author": "_nderscore",
+  "license": "MIT",
+  "repository" : {
+    "type" : "git",
+    "url" : "https://github.com/nderscore/cordelia-bot.git"
+  },
+  "dependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-preset-env": "^1.6.0",
+    "babel-preset-stage-1": "^6.24.1",
+    "cross-env": "^5.0.1",
+    "discord.js": "^11.1.0",
+    "express": "^4.15.3",
+    "mysql": "^2.13.0",
+    "nconf": "^0.8.4",
+    "require-all": "^2.2.0"
+  }
+}

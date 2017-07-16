@@ -32,6 +32,8 @@
 3.  Copy sample config from `./config/sample.config.json` to 
     `./config/development.config.json` and edit it to suit your needs.
 
+4.  Import MySQL schema from `./schema.sql`
+
 
 # Running for development
 

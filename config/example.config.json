@@ -9,10 +9,21 @@
     ],
     "prefix": "!"
   },
+  "rankings": {
+    "glickoDefaults": {
+      "r": 1500,
+      "rd": 350.0,
+      "vol": 0.06
+    },
+    "matchFormats": [
+      { "code": "TA8", "name": "Tetris Attack - Speed 8" },
+      { "code": "PPL8", "name": "Pokemon Puzzle League  - Speed 8" }
+    ]
+  },
   "mysql": {
     "host": "localhost",
     "port": 3306,
-    "username": "mysqluser",
+    "user": "mysqluser",
     "password": "mysqlpassword",
     "database": "cordelia"
   }

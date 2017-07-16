@@ -9,9 +9,9 @@
   },
   "author": "_nderscore",
   "license": "MIT",
-  "repository" : {
-    "type" : "git",
-    "url" : "https://github.com/nderscore/cordelia-bot.git"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nderscore/cordelia-bot.git"
   },
   "dependencies": {
     "babel-cli": "^6.24.1",
@@ -20,6 +20,7 @@
     "cross-env": "^5.0.1",
     "discord.js": "^11.1.0",
     "express": "^4.15.3",
+    "glicko2-lite": "^1.0.1",
     "mysql": "^2.13.0",
     "nconf": "^0.8.4",
     "require-all": "^2.2.0"

@@ -1,8 +1,15 @@
-import getCommands from './commands';
+import commands from './commands';
 import config from '../util/config';
 import { regexEscape } from '../util';
 
-export default (client) => {
+
+/**
+ * Creates a message event handler parsing commands from incoming messages.
+ *
+ * @param      {Discord.js.Client}  client  The Discord.js client
+ * @return     {Function}  Message event handler
+ */
+const createCommandParser = (client) => {
   const {
     allowedChannels,
     prefix
@@ -10,14 +17,13 @@ export default (client) => {
 
   const _prefix = regexEscape(prefix);
   const pattern = RegExp(`^${_prefix}(\\w+)\\s*(.*)$`);
-  const commands = getCommands();
 
-  const messageHandler = message => {
+  const messageHandler = (message) => {
+    // check bot-level DM/TextChannel permissions
     const {
       channel,
       content
     } = message;
-
     const { type } = channel;
     const isDM = type === 'dm';
     const isText = type === 'text';
@@ -27,17 +33,44 @@ export default (client) => {
       return;
     }
 
+    // check if message looks like a command
     const match = content.match(pattern);
 
     if (!match) {
       return;
     }
 
-    const [, commandName, opts = ''] = match;
+    // find a matching command
+    const [, commandName, opts  = ''] = match;
     const command = commands.find(cmd => cmd.name === commandName);
 
     if (command) {
-      const options = opts.split(/\s+/);
+      // check command-level DM/TextChannel permissions
+      const {
+        allowDirectMessage,
+        allowChannelMessage
+      } = command;
+
+      if (
+        (isDM && !allowDirectMessage) ||
+        (isAllowedChannel && !allowChannelMessage)
+      ) {
+        return;
+      }
+
+      // check that command options can be parsed from message
+      let options = null;
+      if (command.optionParser) {
+        const parsedOptions = opts.match(command.optionParser);
+
+        if (!parsedOptions) {
+          return;
+        }
+
+        options = parsedOptions.slice(1);
+      }
+
+      // execute the command's run method
       command.run({
         client,
         message,
@@ -48,3 +81,5 @@ export default (client) => {
 
   return messageHandler;
 };
+
+export default createCommandParser;

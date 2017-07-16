@@ -22,7 +22,6 @@
     "express": "^4.15.3",
     "glicko2-lite": "^1.0.1",
     "mysql": "^2.13.0",
-    "nconf": "^0.8.4",
-    "require-all": "^2.2.0"
+    "nconf": "^0.8.4"
   }
 }

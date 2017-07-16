@@ -25,7 +25,7 @@ const pool = mysql.createPool({
  * @param      {Object}  options  The options object for connection.query
  * @return     {Promise<Object>}  Promise returning { results, fields }
  */
-export default const query = (options) =>
+export default const query = options =>
   Promise((resolve, reject) => {
     pool.getConnection((err, connection) => {
       if (err) {

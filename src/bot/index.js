@@ -1,5 +1,5 @@
 import Discord from 'discord.js';
-import commandParser from './commandParser';
+import createCommandParser from './commandParser';
 import config from '../util/config';
 
 
@@ -11,6 +11,6 @@ client.on('ready', () => {
   console.log('Bot is running.');
 });
 
-client.on('message', commandParser(client));
+client.on('message', createCommandParser(client));
 
 client.login(apiToken);

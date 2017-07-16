@@ -1,22 +1,11 @@
-// TODO - This is gross. Do something more ES6-y
-import requireAll from 'require-all';
 import config from '../../util/config';
+import big from './big';
 
-export default () => {
-  const { disabledCommands } = config.get('bot');
-  const excludes = ['index', ...disabledCommands];
+const { disabledCommands } = config.get('bot');
 
-  const commands = requireAll({
-    dirname: __dirname,
-    filter: (filename) => {
-      const r = RegExp('^(.*)\\.js$');
-      const [, name] = filename.match(r);
+const commands = [
+  big
+]
+.filter(({ name }) => !disabledCommands.includes(name));
 
-      if (!excludes.includes(name)) {
-        return name;
-      }
-    }
-  });
-
-  return Object.values(commands).map(exports => exports.default);
-};
+export default commands;

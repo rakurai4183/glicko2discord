@@ -64,8 +64,8 @@ export const calculateRanking = ({
 /**
  * Gets or creates a new ranking for a player
  *
- * @param      {String}  arg1.discordId  The discord identifier
- * @param      {String}  arg1.format     The format
+ * @param      {String}  discordId  The discord identifier
+ * @param      {String}  format     The game format
  * @return     {<type>}  The or create ranking.
  */
 export const getOrCreateRanking = ({
@@ -87,15 +87,14 @@ export const getOrCreateRanking = ({
         vol
       } = glickoDefaults;
 
-      createRanking({
+      return createRanking({
         format,
         discordId,
         r,
         rd,
         vol
-      });
-
-      return glickoDefaults;
+      })
+      .then(() => glickoDefaults);
     }
 
     return playerRanking;

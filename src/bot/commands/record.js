@@ -134,7 +134,7 @@ Tell them to use \`!register\` first.`
           {
             name: `${emojiOne} ${playerOneName} -vs- ${playerTwoName} ${emojiTwo}`,
             value: `
-<@${playerTwoId}>, please type \`!confirm ${confirmationCode}\` to confrim the result of this match.
+<@${playerTwoId}>, please type \`!confirm ${confirmationCode}\` to confirm the result of this match.
 Both players can type \`!decline ${confirmationCode}\` to decline this match result.`
           }
         ]

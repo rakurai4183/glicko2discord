@@ -1,8 +1,10 @@
+import { buildEmbed } from '../../util/discord';
 import { createMatch } from '../../mysql/matches';
 import { getPlayerById } from '../../mysql/players';
 import { getMatchFormat } from '../../util/rankings';
 import { randomCode } from '../../util';
 import moment from 'moment';
+
 
 const name = 'record';
 const optionParser = /(\w+)\s+(win|lose)\s+/i;
@@ -30,7 +32,8 @@ const run = ({
     mentions
   } = message;
   const {
-    id: playerOneId
+    id: playerOneId,
+    username: playerOneName
   } = author;
 
   // Get player two's ID from mentions
@@ -44,7 +47,10 @@ const run = ({
   }
 
   const [playerTwo] = mentionArray;
-  const { id: playerTwoId } = playerTwo;
+  const {
+    id: playerTwoId,
+    username: playerTwoName
+  } = playerTwo;
 
   const winnerId = winLose.toLowerCase() === 'win' ? playerOneId : playerTwoId;
 
@@ -111,17 +117,21 @@ Tell them to use \`!register\` first.`
       ? [':medal:', ':second_place:']
       : [':second_place:', ':medal:'];
 
-    channel.send(`
-__**New match recorded:**__
+    const icon_url = client.user.avatarURL;
 
-**Format:** \`${formatName}\` (${format})
-
-${emojiOne} <@${playerOneId}> *-vs-* <@${playerTwoId}> ${emojiTwo}
-`);
-    channel.send(`
+    return channel.send(
+      buildEmbed(client, {
+        title: 'New Match Recorded!',
+        description: `**Format:** ${formatName} (\`${format}\`)`,
+        fields: [
+          {
+            name: `${emojiOne} ${playerOneName} -vs- ${playerTwoName} ${emojiTwo}`,
+            value: `
 <@${playerTwoId}>, please type \`!confirm ${confirmationCode}\` to confrim the result of this match.
-Both players can type \`!deny ${confirmationCode}\` to decline this match result.
-  `
+Both players can type \`!deny ${confirmationCode}\` to decline this match result.`
+          }
+        ]
+      })
     );
   })
   .catch(console.error);

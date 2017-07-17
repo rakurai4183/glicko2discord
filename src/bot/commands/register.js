@@ -1,4 +1,6 @@
+import { buildEmbed } from '../../util/discord';
 import { updatePlayer } from '../../mysql/players';
+
 
 const name = 'register';
 const optionParser = /^$/;
@@ -34,7 +36,12 @@ const run = ({
     name
   })
   .then(() =>
-    channel.send(`Created/Updated registration for player: <@${discordId}>!`)
+    channel.send(
+      buildEmbed(client, {
+        title: `Created/updated registration`,
+        description: `Player: <@${discordId}>`
+      })
+    )
   )
   .catch(console.error);
 };

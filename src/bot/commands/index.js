@@ -1,11 +1,16 @@
 import config from '../../util/config';
+
 import big from './big';
+import help from './help';
+
 
 const { disabledCommands } = config.get('bot');
 
-const commands = [
-  big
+export const commands = [
+  big,
+  help
 ]
 .filter(({ name }) => !disabledCommands.includes(name));
 
-export default commands;
+// workaround for circular reference issue
+export const getCommands = () => commands;

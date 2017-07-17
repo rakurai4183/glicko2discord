@@ -1,4 +1,4 @@
-import commands from './commands';
+import { commands } from './commands';
 import config from '../util/config';
 import { regexEscape } from '../util';
 
@@ -19,6 +19,22 @@ const createCommandParser = (client) => {
   const pattern = RegExp(`^${_prefix}(\\w+)\\s*(.*)$`);
 
   const messageHandler = (message) => {
+    // ignore own messages
+    const {
+      user: {
+        id: botUserId
+      }
+    } = client;
+    const {
+      author: {
+        id: authorUserId
+      }
+    } = message;
+
+    if (botUserId === authorUserId) {
+      return;
+    }
+
     // check bot-level DM/TextChannel permissions
     const {
       channel,

@@ -2,11 +2,13 @@ import { emojifyString } from '../../util';
 
 const name = 'big';
 const optionParser = /(.+)/;
-const shortHelp = '*!big [text]* - Converts text into big emoji characters.';
+const shortHelp = '!big [text] - Converts text into big emoji characters';
 const help = `
-Usage: *!big [text]*
+Usage: \`!big [text]\`
 
-*text* = the text to be converted.
+\`text\` = the text to be converted.
+
+Example: \`!big hello world\`
 `;
 const allowDirectMessage = true;
 const allowChannelMessage = true;

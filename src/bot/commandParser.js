@@ -57,7 +57,7 @@ const createCommandParser = (client) => {
     }
 
     // find a matching command
-    const [, commandName, opts  = ''] = match;
+    const [, commandName, opts = ''] = match;
     const command = commands.find(cmd => cmd.name === commandName);
 
     if (command) {
@@ -67,10 +67,17 @@ const createCommandParser = (client) => {
         allowChannelMessage
       } = command;
 
-      if (
-        (isDM && !allowDirectMessage) ||
-        (isAllowedChannel && !allowChannelMessage)
-      ) {
+      if (isDM && !allowDirectMessage) {
+        message.author.send(
+          `Sorry, command ${commandName} can only be used in text channels.`
+        );
+        return;
+      }
+
+      if (isAllowedChannel && !allowChannelMessage) {
+        message.author.send(
+          `Sorry, command ${commandName} can only be used in direct messages.`
+        );
         return;
       }
 
@@ -80,6 +87,9 @@ const createCommandParser = (client) => {
         const parsedOptions = opts.match(command.optionParser);
 
         if (!parsedOptions) {
+          message.author.send(
+            `**Incorrect usage of ${commandName}.** ${command.help}`
+          );
           return;
         }
 

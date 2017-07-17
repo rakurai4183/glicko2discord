@@ -9,7 +9,7 @@ export const buildEmbed = (client, options) => {
     embed: Object.assign({
       color,
       author: {
-        name: 'Ranked Matchmaking',
+        name: 'Cordelia',
         icon_url
       },
       timestamp

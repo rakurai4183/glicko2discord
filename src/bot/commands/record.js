@@ -52,7 +52,7 @@ const run = ({
     username: playerTwoName
   } = playerTwo;
 
-  const winnerId = winLose.toLowerCase() === 'win' ? playerOneId : playerTwoId;
+  const winner = winLose.toLowerCase() === 'win' ? 1 : 2;
 
   // Check that format is valid
   const formatObject = getMatchFormat(format);
@@ -98,7 +98,6 @@ Tell them to use \`!register\` first.`
     }
 
     const timestamp = moment().format('YYYY-MM-DD HH:mm:ss');
-    const winner = winnerId === playerOneId ? 1 : 2;
     
     return createMatch({
       timestamp,
@@ -113,7 +112,7 @@ Tell them to use \`!register\` first.`
   .then(() => {
     const { name: formatName } = formatObject;
 
-    const [emojiOne, emojiTwo] = winnerId === playerOneId
+    const [emojiOne, emojiTwo] = winner === 1
       ? [':medal:', ':second_place:']
       : [':second_place:', ':medal:'];
 
@@ -128,7 +127,7 @@ Tell them to use \`!register\` first.`
             name: `${emojiOne} ${playerOneName} -vs- ${playerTwoName} ${emojiTwo}`,
             value: `
 <@${playerTwoId}>, please type \`!confirm ${confirmationCode}\` to confrim the result of this match.
-Both players can type \`!deny ${confirmationCode}\` to decline this match result.`
+Both players can type \`!decline ${confirmationCode}\` to decline this match result.`
           }
         ]
       })

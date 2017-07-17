@@ -1,8 +1,8 @@
 import config from '../../util/config';
 
 import big from './big';
-/*import confirm from './confirm';
-import deny from './deny';*/
+/*import confirm from './confirm';*/
+import decline from './decline';
 import formats from './formats';
 import help from './help';
 import record from './record';
@@ -13,8 +13,8 @@ const { disabledCommands } = config.get('bot');
 
 export const commands = [
   big,
-  /*confirm,
-  deny,*/
+  /*confirm,*/
+  decline,
   formats,
   help,
   record,

@@ -54,6 +54,14 @@ const run = ({
 
   const winner = winLose.toLowerCase() === 'win' ? 1 : 2;
 
+  // Check that players don't match
+  if (playerOneId === playerTwoId) {
+    author.send(
+      `You can't play a match against yourself! :stuck_out_tongue:`
+    );
+    return;
+  }
+
   // Check that format is valid
   const formatObject = getMatchFormat(format);
 
@@ -120,7 +128,7 @@ Tell them to use \`!register\` first.`
 
     return channel.send(
       buildEmbed(client, {
-        title: 'New Match Recorded!',
+        title: 'New Match Recorded',
         description: `**Format:** ${formatName} (\`${format}\`)`,
         fields: [
           {

@@ -44,9 +44,8 @@ export const confirmMatch = ({
   query({
     query: `
     UPDATE matches
-      (confirmed)
-    VALUES
-      (1)
+    SET
+      confirmed = 1
     WHERE
       player2 = ?
       AND

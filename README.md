@@ -5,7 +5,7 @@
 <h1 align="center">Cordelia Bot</h1>
 
 <p align="center">
-  Match tracking bot for TetrisAttackOnline Discord with web-based UI.
+  Match tracking bot for TetrisAttackOnline Discord with Glicko 2 ranking system.
 </p>
 
 

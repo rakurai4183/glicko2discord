@@ -48,9 +48,10 @@ export const updateRanking = ({
   query({
     query: `
     UPDATE rankings
-      (r, rd, vol)
-    VALUES
-      (?, ?, ?)
+    SET
+      r = ?,
+      rd = ?,
+      vol = ?
     WHERE
       discordid = ?
       AND
@@ -78,6 +79,6 @@ export const getRanking = ({
       AND
       format = ?
     ;`,
-    values: [r, rd, vol, discordId, format]
+    values: [discordId, format]
   })
   .then(({ results }) => results[0] || false);

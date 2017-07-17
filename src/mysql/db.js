@@ -13,7 +13,7 @@ const {
 
 const pool = mysql.createPool({
   host,
-  port
+  port,
   user,
   password,
   database
@@ -25,17 +25,22 @@ const pool = mysql.createPool({
  * @param      {Object}  options  The options object for connection.query
  * @return     {Promise<Object>}  Promise returning { results, fields }
  */
-export default const query = options =>
-  Promise((resolve, reject) => {
+const query = options =>
+  new Promise((resolve, reject) => {
     pool.getConnection((err, connection) => {
       if (err) {
-        reject(err);
+        reject({ error, options });
         return;
       }
 
-      connection.query(options, (error, results, fields) => {
-        if (err) {
-          reject(err);
+      const {
+        query = '',
+        values = []
+      } = options;
+
+      connection.query(query, values, (error, results, fields) => {
+        if (error) {
+          reject({ error, options });
           return;
         }
 
@@ -46,3 +51,5 @@ export default const query = options =>
       });
     })
   });
+
+export default query;

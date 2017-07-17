@@ -31,7 +31,7 @@ export const createRanking = ({
 /**
  * Update a player ranking
  *
- * @param      {Number}  discordId  The discord identifier
+ * @param      {String}  discordId  The discord identifier
  * @param      {String}  format  The game format
  * @param      {Number}  r  Rating
  * @param      {Number}  rd  Rating Deviation

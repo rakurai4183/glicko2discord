@@ -6,8 +6,8 @@ import query from './db';
  *
  * @param      {Number}  timestamp  UNIX timestamp
  * @param      {String}  format  The game format
- * @param      {Number}  player1  Player 1's discord ID
- * @param      {Number}  player2  Player 2's discord ID
+ * @param      {String}  player1  Player 1's discord ID
+ * @param      {String}  player2  Player 2's discord ID
  * @param      {Number}  winner  Winner (1, 2, 3 = tie)
  * @param      {String}  confirmationCode  Random confirmation code
  * @return     {Promise} Resolves if successful.
@@ -18,7 +18,7 @@ export const createMatch = ({
   player1,
   player2,
   winner,
-  comfirmationCode
+  confirmationCode
 }) =>
   query({
     query: `
@@ -39,7 +39,7 @@ export const createMatch = ({
  */
 export const confirmMatch = ({
   discordId,
-  comfirmationCode
+  confirmationCode
 }) =>
   query({
     query: `

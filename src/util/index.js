@@ -23,10 +23,20 @@ export const emojifyString = str =>
     '?': ':question:'
   })[char] || `:regional_indicator_${char}:`)
   .join('')
-  .replace(/.{2001,}/, str =>
-    str.slice(0, 2000)
+  .replace(/.{1966}/, str =>
+    str.slice(0, 1965)
     .replace(/:[^:]+$/, '')
   );
+
+/**
+ * No-Operation (does nothing)
+ */
+export const noop = () => {};
+
+export const randomCode = length =>
+  [...Array(length)]
+  .map(() => Math.random() * 10 | 0)
+  .join('');
 
 /**
  * Escapes a string for use in a Regular Expression

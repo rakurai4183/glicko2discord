@@ -18,8 +18,11 @@ const run = ({
   message,
   options: [text]
 }) => {
+  const { id } = message.author;
   const response = emojifyString(text);
-  message.channel.send(response);
+  message.channel.send(`<@${id}>:
+
+${response}`);
 };
 
 export default {

@@ -19,20 +19,22 @@ const run = ({
   message,
   options: [commandName]
 }) => {
+  const { author } = message;
   const commands = getCommands();
 
   if (!commandName) {
-    const commandListing = commands.map(command => command.shortHelp)
-                           .join('\n');
+    const shortHelps = commands.map(command => command.shortHelp);
+
     message.author.send(`\`\`\`
-${commandListing}
+${shortHelps.join('\n')}
 \`\`\``);
   } else {
     const command = commands.find(cmd => cmd.name === commandName);
+
     if (command) {
-      message.author.send(command.help);
+      author.send(command.help);
     } else {
-      message.author.send(`Command ${commandName} does not exist.`);
+      author.send(`Command ${commandName} does not exist.`);
     }
   }
 };

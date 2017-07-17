@@ -17,7 +17,7 @@
     },
     "matchFormats": [
       { "code": "TA8", "name": "Tetris Attack - Speed 8" },
-      { "code": "PPL8", "name": "Pokemon Puzzle League  - Speed 8" }
+      { "code": "PPL8", "name": "Pokemon Puzzle League - Speed 8" }
     ]
   },
   "mysql": {

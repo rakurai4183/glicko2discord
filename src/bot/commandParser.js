@@ -1,6 +1,9 @@
 import { commands } from './commands';
 import config from '../util/config';
-import { regexEscape } from '../util';
+import {
+  noop,
+  regexEscape
+} from '../util';
 
 
 /**
@@ -78,6 +81,8 @@ const createCommandParser = (client) => {
         message.author.send(
           `Sorry, command ${commandName} can only be used in direct messages.`
         );
+        // delete the command call if possible
+        message.delete().catch(noop);
         return;
       }
 
@@ -90,6 +95,8 @@ const createCommandParser = (client) => {
           message.author.send(
             `**Incorrect usage of ${commandName}.** ${command.help}`
           );
+          // delete the command call if possible
+          message.delete().catch(noop);
           return;
         }
 
@@ -102,6 +109,9 @@ const createCommandParser = (client) => {
         message,
         options
       });
+
+      // delete the command call if possible
+      message.delete().catch(noop);
     }
   };
 

@@ -16,7 +16,8 @@ const pool = mysql.createPool({
   port,
   user,
   password,
-  database
+  database,
+  connectionLimit: 5
 });
 
 /**
@@ -29,6 +30,7 @@ const query = options =>
   new Promise((resolve, reject) => {
     pool.getConnection((err, connection) => {
       if (err) {
+        connection.release();
         reject({ error, options });
         return;
       }
@@ -40,10 +42,12 @@ const query = options =>
 
       connection.query(query, values, (error, results, fields) => {
         if (error) {
+          connection.release();
           reject({ error, options });
           return;
         }
 
+        connection.release();
         resolve({
           results,
           fields

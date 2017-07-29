@@ -73,6 +73,11 @@ Check \`!formats\`.`
     return;
   }
 
+  const {
+    code: formatCode,
+    name: formatName
+  } = formatObject;
+
   const confirmationCode = randomCode(6);
 
   // Check that both players are registered
@@ -109,7 +114,7 @@ Tell them to use \`!register\` first.`
     
     return createMatch({
       timestamp,
-      format,
+      format: formatCode,
       player1: playerOneId,
       player2: playerTwoId,
       winner,
@@ -118,8 +123,6 @@ Tell them to use \`!register\` first.`
   })
   // Send chat message
   .then(() => {
-    const { name: formatName } = formatObject;
-
     const [emojiOne, emojiTwo] = winner === 1
       ? [':medal:', ':second_place:']
       : [':second_place:', ':medal:'];
@@ -129,7 +132,7 @@ Tell them to use \`!register\` first.`
     return channel.send(
       buildEmbed(client, {
         title: 'New Match Recorded',
-        description: `**Format:** ${formatName} (\`${format}\`)`,
+        description: `**Format:** ${formatName} (\`${formatCode}\`)`,
         fields: [
           {
             name: `${emojiOne} ${playerOneName} -vs- ${playerTwoName} ${emojiTwo}`,

@@ -109,7 +109,7 @@ const run = ({
         })
       ])
     )
-    .then(() => match);
+    .then(() => Promise.resolve(match));
   })
   // Confirm match
   .then((match) => {
@@ -141,14 +141,17 @@ const run = ({
       ? [':medal:', ':second_place:']
       : [':second_place:', ':medal:'];
 
-    const { name: formatName } = getMatchFormat(format);
+    const {
+      code: formatCode,
+      name: formatName
+    } = getMatchFormat(format);
 
     return channel.send(
       buildEmbed(client, {
         title: `Match result confirmed (${confirmationCode})`,
         description: `
 ${emojiOne} <@${playerOneId}> -vs- <@${playerTwoId}> ${emojiTwo}
-**Format:** ${formatName} (\`${format}\`)
+**Format:** ${formatName} (\`${formatCode}\`)
     `
       })
     );

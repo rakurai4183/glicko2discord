@@ -77,25 +77,23 @@ export const getOrCreateRanking = ({
     format
   })
   .then((ranking) => {
-    let playerRanking = ranking;
-
-    if (!playerRanking) {
-      const { glickoDefaults } = config.get('rankings');
-      const {
-        r,
-        rd,
-        vol
-      } = glickoDefaults;
-
-      return createRanking({
-        format,
-        discordId,
-        r,
-        rd,
-        vol
-      })
-      .then(() => glickoDefaults);
+    if (ranking) {
+      return Promise.resolve(ranking);
     }
+    
+    const { glickoDefaults } = config.get('rankings');
+    const {
+      r,
+      rd,
+      vol
+    } = glickoDefaults;
 
-    return playerRanking;
+    return createRanking({
+      format,
+      discordId,
+      r,
+      rd,
+      vol
+    })
+    .then(() => Promise.resolve(glickoDefaults));
   });

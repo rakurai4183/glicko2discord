@@ -3,9 +3,8 @@
   "version": "0.0.1",
   "description": "Match tracking bot for TetrisAttackOnline Discord.",
   "scripts": {
-    "dev": "cross-env NODE_ENV=development npm run start:run",
-    "start": "cross-env NODE_ENV=production npm run start:run",
-    "start:run": "babel-node ./src/bot/index.js"
+    "dev": "cross-env NODE_ENV=development babel-node ./src/bot/index.js",
+    "start": "cross-env NODE_ENV=production babel-node ./src/bot/index.js"
   },
   "author": "_nderscore",
   "license": "MIT",

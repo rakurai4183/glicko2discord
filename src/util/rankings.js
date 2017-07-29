@@ -18,18 +18,52 @@ export const getMatchFormat = (formatCode) => {
 };
 
 /**
+ * Reads a string in format WWLLWLW and returns the number of wins and losses.
+ * OR
+ * Reads a string in format #-# and returns wins and losses
+ *
+ * @param      {string}  str
+ * @return     {Object}  Object with format { wins, losses }
+ */
+export const parseWinLoss = (str) => {
+  if (/^[WLwl]+$/.test(str)) {
+    const chars = [...str.toUpperCase()];
+    const total = chars.length;
+    const wins = chars.filter(char => char === 'W').length;
+    const losses = total - wins;
+
+    return {
+      wins,
+      losses,
+      total
+    };
+  } else {
+    const [, wins, losses] = str.match(/^(\d+)\-(\d+)$/).map(Number);
+    const total = wins + losses;
+
+    return {
+      wins,
+      losses,
+      total
+    };
+  }
+};
+
+/**
  * Calculates a player's new ranking using magical statistics:
  * http://www.glicko.net/glicko/glicko2.pdf
  *
  * @param      {Object}   player    The player's rating object
  * @param      {Object}   opponent  The opponent's rating object
- * @param      {Boolean}  win       Did the player win?
+ * @param      {Number}   wins      How many wins
+ * @param      {Number}   losses    How many losses
  * @return     {Object}   The ranking { r, rd, vol }
  */
 export const calculateRanking = ({
   player,
   opponent,
-  win = false
+  wins,
+  losses
 }) => {
   const {
     r: playerR,
@@ -42,10 +76,9 @@ export const calculateRanking = ({
     rd: opponentRD
   } = opponent;
 
-  const winValue = win ? 1 : 0;
-
   const matches = [
-    [opponentR, opponentRD, winValue]
+    ...[...Array(wins)].map(() => [opponentR, opponentRD, 1]),
+    ...[...Array(losses)].map(() => [opponentR, opponentRD, 0])
   ];
 
   const {

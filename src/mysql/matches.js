@@ -7,8 +7,9 @@ import query from './db';
  * @param      {String}  timestamp  UNIX timestamp
  * @param      {String}  format  The game format
  * @param      {String}  player1  Player 1's discord ID
+ * @param      {Number}  player1wins Number of games won by player 1
  * @param      {String}  player2  Player 2's discord ID
- * @param      {Number}  winner  Winner (1, 2, 3 = tie)
+ * @param      {Number}  player2wins Number of games won by player 2
  * @param      {String}  confirmationCode  Random confirmation code
  * @return     {Promise} Resolves if successful.
  */
@@ -16,18 +17,20 @@ export const createMatch = ({
   timestamp,
   format,
   player1,
+  player1wins,
   player2,
+  player2wins,
   winner,
   confirmationCode
 }) =>
   query({
     query: `
     INSERT INTO matches
-      (timestamp, format, player1, player2, winner, confirmationcode, confirmed)
+      (timestamp, format, player1, player1wins, player2, player2wins, confirmationcode, confirmed)
     VALUES
-      (?, ?, ?, ?, ?, ?, 0)
+      (?, ?, ?, ?, ?, ?, ?, 0)
     ;`,
-    values: [timestamp, format, player1, player2, winner, confirmationCode]
+    values: [timestamp, format, player1, player1wins, player2, player2wins, confirmationCode]
   });
 
 /**

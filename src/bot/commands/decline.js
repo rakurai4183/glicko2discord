@@ -59,25 +59,27 @@ const run = ({
       id,
       format,
       player1: playerOneId,
+      player1wins,
       player2: playerTwoId,
-      winner
+      player2wins
     } = match;
 
-    const [emojiOne, emojiTwo] = winner === 1
-      ? [':medal:', ':second_place:']
-      : [':second_place:', ':medal:'];
-
-    const { name: formatName } = getMatchFormat(format);
+    const {
+      code: formatCode,
+      name: formatName
+    } = getMatchFormat(format);
 
     return deleteMatch({ id })
       // Send success chat message
       .then(() =>
         channel.send(
           buildEmbed(client, {
-            title: `Match result removed (${confirmationCode})`,
+            title: `Match result cancelled (${confirmationCode})`,
             description: `
-~~${emojiOne} <@${playerOneId}> -vs- <@${playerTwoId}> ${emojiTwo}~~
-**Format:** ${formatName} (\`${format}\`)
+~~<@${playerOneId}> **(${player1wins})** - **(${player2wins})** <@${playerTwoId}>~~
+
+**Format:** ${formatName} (\`${formatCode}\`)
+
 Declined by **${playerName}**
 `
           })

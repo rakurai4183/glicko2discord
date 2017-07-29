@@ -53,20 +53,22 @@ const run = ({
       );
       return false;
     }
-    return match;
-  })
-  // Update rankings
-  .then((match) => {
-    if (!match) {
-      return;
+
+    if (match.player1 === discordId) {
+      author.send(
+        `Only your opponent can confirm this match.`
+      );
     }
+
+    // Update rankings
 
     const {
       id,
       format,
       player1: playerOneId,
+      player1wins,
       player2: playerTwoId,
-      winner
+      player2wins
     } = match;
 
     return Promise.all([
@@ -79,20 +81,21 @@ const run = ({
         format
       })
     ])
-    .then(([playerOneRank, playerTwoRank]) => ([
-      calculateRanking({
+    .then(([playerOneRank, playerTwoRank]) => {
+      const playerOneNewRank = calculateRanking({
         player: playerOneRank, 
         opponent: playerTwoRank,
-        win: winner === 1
-      }),
-      calculateRanking({
+        wins: player1wins,
+        losses: player2wins
+      });
+      const playerTwoNewRank = calculateRanking({
         player: playerTwoRank, 
         opponent: playerOneRank,
-        win: winner === 2
-      })
-    ]))
-    .then(([playerOneNewRank, playerTwoNewRank]) => 
-      Promise.all([
+        wins: player2wins,
+        losses: player1wins
+      });
+
+      return Promise.all([
         updateRanking({
           discordId: playerOneId,
           format,
@@ -101,19 +104,23 @@ const run = ({
           vol: playerOneNewRank.vol
         }),
         updateRanking({
-          discordId: playerOneId,
+          discordId: playerTwoId,
           format,
           r: playerTwoNewRank.r,
           rd: playerTwoNewRank.rd,
           vol: playerTwoNewRank.vol
         })
       ])
-    )
-    .then(() => Promise.resolve(match));
+      .then((res) => Promise.resolve({
+        match,
+        playerOneRating: Math.round(playerOneNewRank.r),
+        playerTwoRating: Math.round(playerTwoNewRank.r)
+      }));
+    });
   })
   // Confirm match
-  .then((match) => {
-    if (!match) {
+  .then((result) => {
+    if (!result) {
       return;
     }
 
@@ -121,25 +128,28 @@ const run = ({
       discordId,
       confirmationCode
     })
-    .then(() => match);
+    .then((res) => Promise.resolve(result));
   })
   // Send chat message
-  .then((match) => {
-    if (!match) {
+  .then((result) => {
+    if (!result) {
       return;
     }
+
+    const {
+      match,
+      playerOneRating,
+      playerTwoRating
+    } = result;
 
     const {
       id,
       format,
       player1: playerOneId,
+      player1wins,
       player2: playerTwoId,
-      winner
+      player2wins
     } = match;
-
-    const [emojiOne, emojiTwo] = winner === 1
-      ? [':medal:', ':second_place:']
-      : [':second_place:', ':medal:'];
 
     const {
       code: formatCode,
@@ -150,9 +160,14 @@ const run = ({
       buildEmbed(client, {
         title: `Match result confirmed (${confirmationCode})`,
         description: `
-${emojiOne} <@${playerOneId}> -vs- <@${playerTwoId}> ${emojiTwo}
+<@${playerOneId}> **(${player1wins})** - **(${player2wins})** <@${playerTwoId}>
+
 **Format:** ${formatName} (\`${formatCode}\`)
-    `
+
+ <@${playerOneId}> New ${formatCode} Rating: **${playerOneRating}**
+
+ <@${playerTwoId}> New ${formatCode} Rating: **${playerTwoRating}** 
+`
       })
     );
   })

@@ -30,7 +30,7 @@ const query = options =>
   new Promise((resolve, reject) => {
     pool.getConnection((err, connection) => {
       if (err) {
-        connection.release();
+        connection && connection.release();
         reject({ error, options });
         return;
       }

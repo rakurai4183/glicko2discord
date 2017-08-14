@@ -4,9 +4,10 @@ import config from '../../util/config';
 // import confirm from './confirm';
 // import decline from './decline';
 // import formats from './formats';
-import help from './help';
+import * as help from './help';
 // import record from './record';
 // import register from './register';
+import * as status from './status';
 
 
 const { disabledCommands } = config.get('bot');
@@ -16,9 +17,10 @@ export const commands = [
 //  confirm,
 //  decline,
 //  formats,
-  help
+  help,
 //  record,
 //  register
+  status
 ]
 .filter(({ name }) => !disabledCommands.includes(name));
 

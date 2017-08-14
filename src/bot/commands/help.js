@@ -1,20 +1,25 @@
 import { getCommands } from './index';
 
 
-const name = 'help';
-const optionParser = /(\w*)/;
-const shortHelp = '!help [command] - Displays help for a command';
-const help = `
+export const name = 'help';
+
+export const optionParser = /(\w*)/;
+
+export const shortHelp = '!help [command] - Displays help for a command';
+
+export const help = `
 Usage: \`!help [command]\`
 
 \`command\` = the command you want help with.
 
 Example: \`!help big\`
 `;
-const allowDirectMessage = true;
-const allowChannelMessage = true;
 
-const run = ({
+export const allowDirectMessage = true;
+
+export const allowChannelMessage = true;
+
+export const run = ({
   client,
   message,
   options: [commandName]
@@ -37,14 +42,4 @@ ${shortHelps.join('\n')}
       author.send(`Command ${commandName} does not exist.`);
     }
   }
-};
-
-export default {
-  name,
-  optionParser,
-  shortHelp,
-  help,
-  allowDirectMessage,
-  allowChannelMessage,
-  run
 };

@@ -21,6 +21,29 @@
       { "code": "PPL8", "name": "Pokemon Puzzle League - Speed 8" }
     ]
   },
+  "statuses": [
+    {
+      "code": "IG",
+      "role": "In-Game",
+      "help": "In a game."
+    },
+    {
+      "code": "WTP",
+      "role": "Wants To Play",
+      "help": "Actively seeking a match. Announces to the channel.",
+      "alert": "<@Wants To Play> <@Available To Play> \n\n**{username} wants to play!**"
+    },
+    {
+      "code": "ATP",
+      "role": "Available To Play",
+      "help": "Passively seeking a match. Does not announce to the channel."
+    },
+    {
+      "code": "NA",
+      "role": "Not Available",
+      "help": "Not seeking a match."
+    }
+  ],
   "mysql": {
     "host": "localhost",
     "port": 3306,

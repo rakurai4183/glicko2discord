@@ -24,11 +24,11 @@ ${
 }
 \`\`\`
 
-Example: \`!status NA\`
+Example: \`!status wtp\`
 
-Example: \`!status not available\`
+Example: \`!status wants to play\`
 
-Example: \`!status notavail\`
+Example: \`!status want\`
 `;
 
 export const allowDirectMessage = false;
@@ -59,7 +59,7 @@ export const run = ({
 
   if (!status) {
     author.send(
-      `Invalid status code. Type \`!help status\` for a list.`
+      `Sorry, I don't know that status. Type \`!help status\` for help.`
     );
     return;
   }

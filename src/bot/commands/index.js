@@ -10,9 +10,13 @@ import * as help from './help';
 import * as status from './status';
 
 
-const { disabledCommands } = config.get('bot');
+const {
+  commandShortcuts,
+  disabledCommands,
+  prefix
+} = config.get('bot');
 
-export const commands = [
+const core = [
 //  big,
 //  confirm,
 //  decline,
@@ -21,8 +25,57 @@ export const commands = [
 //  record,
 //  register
   status
-]
-.filter(({ name }) => !disabledCommands.includes(name));
+].filter(({ name }) => !disabledCommands.includes(name));
+
+const shortcuts = commandShortcuts
+  .filter(({ command: [name] }) => !disabledCommands.includes(name))
+  .reduce((accumulator, { command, shortcuts, help }) =>
+    accumulator.concat(
+      shortcuts.map(shortcut => ({
+        shortcut,
+        command,
+        help
+      }))
+    ), [])
+  .map(({
+    shortcut, 
+    command: [name, option = ''], 
+    help: helpText
+  }) => {
+    const {
+      allowDirectMessage,
+      allowChannelMessage,
+      help: cmdHelp,
+      run: cmdRun
+    } = core.find(x => x.name === name);
+
+    const shortHelp = `${prefix}${shortcut} - ${helpText} (shortcut for ${prefix}${name} ${option})`;
+
+    const help = `**This is a shortcut for \`${prefix}${name} ${option}\`**
+    
+${cmdHelp}`;
+    
+    const run = (args) =>
+      cmdRun({
+        ...args,
+        options: [option]
+      });
+
+    return {
+      name: shortcut,
+      optionParser: /^$/,
+      shortHelp,
+      help,
+      allowDirectMessage,
+      allowChannelMessage,
+      run
+    };
+  });
+
+export const commands = core.concat(shortcuts)
+  .sort(({ name: nameA }, { name: nameB }) => 
+    nameA > nameB ? 1 : nameB > nameA ? -1 : 0
+  );
 
 // workaround for circular reference issue
 export const getCommands = () => commands;

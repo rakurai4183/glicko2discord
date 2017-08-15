@@ -4,6 +4,28 @@
     "allowedChannels": [
       "bot-commands"
     ],
+    "commandShortcuts": [
+      { 
+        "shortcuts": ["ig", "ingame"],
+        "command": ["status", "ingame"],
+        "help": "Sets your matchmaking status to Lurking"
+      },
+      { 
+        "shortcuts": ["lf", "looking"],
+        "command": ["status", "looking"],
+        "help": "Sets your matchmaking status to Looking For Opponent"
+      },
+      { 
+        "shortcuts": ["lk", "lurk"], 
+        "command": ["status", "lurking"],
+        "help": "Sets your matchmaking status to Lurking"
+      },
+      { 
+        "shortcuts": ["dnd"], 
+        "command": ["status", "donotdisturb"],
+        "help": "Sets your matchmaking status to Do Not Disturb"
+      }
+    ],
     "disabledCommands": [
       
     ],

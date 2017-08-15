@@ -24,11 +24,11 @@ ${
 }
 \`\`\`
 
-Example: \`!status wtp\`
+Example: \`!status lf\`
 
-Example: \`!status wants to play\`
+Example: \`!status looking for opponent\`
 
-Example: \`!status want\`
+Example: \`!status look\`
 `;
 
 export const allowDirectMessage = false;

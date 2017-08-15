@@ -28,20 +28,20 @@
       "help": "In a game."
     },
     {
-      "code": "WTP",
-      "role": "Wants To Play",
-      "help": "Actively seeking a match. Announces to the channel.",
-      "alert": "<@Wants To Play> <@Available To Play> \n\n**{username} wants to play!**"
+      "code": "LF",
+      "role": "Looking For Opponent",
+      "help": "Actively seeking a match. This sends an announces to the channel.",
+      "alert": "<@Looking For Opponent> <@Lurking> \n\n{username} **is looking for an opponent!**"
     },
     {
-      "code": "ATP",
-      "role": "Available To Play",
-      "help": "Passively seeking a match. Does not announce to the channel."
+      "code": "LK",
+      "role": "Lurking",
+      "help": "Not actively seeking a match, but available. Gets match seeking announcements, but does not announce to the channel."
     },
     {
-      "code": "NA",
-      "role": "Not Available",
-      "help": "Not seeking a match."
+      "code": "DND",
+      "role": "Do Not Disturb",
+      "help": "Not seeking a match. Does not recieve match seeking announcements."
     }
   ],
   "mysql": {

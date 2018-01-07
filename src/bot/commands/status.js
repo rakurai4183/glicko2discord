@@ -65,10 +65,10 @@ export const run = ({
   }
 
   const roles = statusConfigs.map(({ role: roleName }) =>
-    guild.roles.find(role => role.name === roleName)
+    guild.roles.find(role => role.name === roleName || role.id === roleName)
   );
 
-  const newRole = roles.find(role => role.name === status.role);
+  const newRole = roles.find(role => role.name === status.role || role.id === status.role);
 
   const rolesToRemove = member.roles.filter(memberRole =>
     roles.find(statusRole => memberRole.id === statusRole.id)

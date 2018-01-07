@@ -46,7 +46,7 @@ const createCommandParser = (client) => {
     const { type } = channel;
     const isDM = type === 'dm';
     const isText = type === 'text';
-    const isAllowedChannel = isText && allowedChannels.includes(channel.name);
+    const isAllowedChannel = isText && allowedChannels.includes(channel.name) || allowedChannels.includes(channel.id);
 
     if (!isDM && !isAllowedChannel) {
       return;
